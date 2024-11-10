@@ -1,0 +1,20 @@
+[project]
+name = "tekra3"
+version = "0.1.0"
+description = "tekra3 using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<=3.13"
+dependencies = [
+    "crewai[tools]>=0.76.9,<1.0.0"
+]
+
+[project.scripts]
+tekra3 = "tekra3.main:run"
+run_crew = "tekra3.main:run"
+train = "tekra3.main:train"
+replay = "tekra3.main:replay"
+test = "tekra3.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
