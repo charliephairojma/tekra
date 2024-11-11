@@ -1,51 +1,190 @@
+from typing import List
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from langchain_openai import ChatOpenAI
+# from langchain_ollama import Ollama
+from tekra3.tools.calculator_tool import CalculatorTool
+from tekra3.tools.sec_tools import SEC10KTool, SEC10QTool
+from tekra3.tools.pdf_tool import PDFTool
+from tekra3.tools.email_tool import EmailTool
+from tekra3.tools.html_tool import HTMLTool
+from crewai_tools import (
+	WebsiteSearchTool, 
+	ScrapeWebsiteTool, 
+	TXTSearchTool,
+    FileWriterTool,
+    PDFSearchTool,
+    DirectoryReadTool,
+    DirectorySearchTool,
+)
+from langchain_openai import ChatOpenAI
 
-# Uncomment the following line to use an example of a custom tool
-# from tekra3.tools.custom_tool import MyCustomTool
 
-# Check our tools documentations for more information on how to use them
-# from crewai_tools import SerperDevTool
+ollama_llama3_1 = 'ollama/llama3.1'
+
+chat_gpt_4o_mini = ChatOpenAI(model="gpt-4o-mini")
 
 @CrewBase
-class Tekra3Crew():
-	"""Tekra3 crew"""
+class StockAnalysisCrew:
+    agents_config = 'config/agents.yaml'
+    tasks_config = 'config/tasks.yaml'
+    
+    @agent
+    def financial_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['financial_analyst'],
+            verbose=True,
+            memory=True,
+            tools=[
+                ScrapeWebsiteTool(),
+                WebsiteSearchTool(),
+                CalculatorTool(),
+                PDFSearchTool(),
+                # DirectoryReadTool(directory="analyst_reports"),
+                # DirectorySearchTool(directory="analyst_reports"),
+                # SEC10QTool("AMZN"),
+                # SEC10KTool("AMZN"),
+            ],
+            llm=chat_gpt_4o_mini
+        )
+    
+    @task
+    def financial_analysis(self) -> Task: 
+        return Task(
+            config=self.tasks_config['financial_analysis'],
+            agent=self.financial_agent(),
+        )
+    
 
-	@agent
-	def researcher(self) -> Agent:
-		return Agent(
-			config=self.agents_config['researcher'],
-			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
-			verbose=True
-		)
+    @agent
+    def research_analyst_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['research_analyst'],
+            verbose=True,
+            memory=True,
+            tools=[
+                ScrapeWebsiteTool(),
+                # PDFSearchTool("stock_analysis/analyst_reports/ueh00159.pdf")
+                # WebsiteSearchTool(), 
+                # SEC10QTool("AMZN"),
+                # SEC10KTool("AMZN"),
+            ],
+            llm=chat_gpt_4o_mini
+        )
+    
+    @task
+    def research(self) -> Task:
+        return Task(
+            config=self.tasks_config['research'],
+            agent=self.research_analyst_agent(),
+        )
+    
+    @agent
+    def financial_analyst_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['financial_analyst'],
+            verbose=True,
+            memory=True,
+            tools=[
+                ScrapeWebsiteTool(),
+                WebsiteSearchTool(),
+                CalculatorTool(),
+                # PDFSearchTool("stock_analysis/analyst_reports/ueh00159.pdf"),
+                # SEC10QTool(),
+                # SEC10KTool(),
+            ],
+            llm=chat_gpt_4o_mini
+        )
+    
+    @task
+    def financial_analysis(self) -> Task: 
+        return Task(
+            config=self.tasks_config['financial_analysis'],
+            agent=self.financial_analyst_agent(),
+        )
+    
+    @task
+    def filings_analysis(self) -> Task:
+        return Task(
+            config=self.tasks_config['filings_analysis'],
+            agent=self.financial_analyst_agent(),
+        )
 
-	@agent
-	def reporting_analyst(self) -> Agent:
-		return Agent(
-			config=self.agents_config['reporting_analyst'],
-			verbose=True
-		)
+    @agent
+    def investment_advisor_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['investment_advisor'],
+            verbose=True,
+            memory=True,
+            tools=[
+                ScrapeWebsiteTool(),
+                WebsiteSearchTool(),
+                CalculatorTool(),
+            ],
+            llm=chat_gpt_4o_mini
+        )
 
-	@task
-	def research_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['research_task'],
-		)
+    @task
+    def recommend(self) -> Task:
+        return Task(
+            config=self.tasks_config['recommend'],
+            agent=self.investment_advisor_agent(),
+        )
 
-	@task
-	def reporting_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
-		)
+    @agent
+    def data_visualizer_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['data_visualizer'],
+            verbose=True,
+            memory=True,
+            tools=[
+                CalculatorTool(),
+            ],
+            llm=chat_gpt_4o_mini
+        )
 
-	@crew
-	def crew(self) -> Crew:
-		"""Creates the Tekra3 crew"""
-		return Crew(
-			agents=self.agents, # Automatically created by the @agent decorator
-			tasks=self.tasks, # Automatically created by the @task decorator
-			process=Process.sequential,
-			verbose=True,
-			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
-		)
+    @task
+    def data_visualization(self) -> Task:
+        return Task(
+            config=self.tasks_config['data_visualization'],
+            agent=self.data_visualizer_agent(),
+        )
+
+    @agent
+    def web_developer_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['web_developer'],
+            verbose=True,
+            memory=True,
+            # tools=[
+                # EmailTool(),
+                # PDFTool(),
+                # FileWriterTool(overwrite=True, directory="reports"),
+            # ],
+            llm=chat_gpt_4o_mini
+            
+        )
+
+    @task
+    def report_generation(self) -> Task:
+        return Task(
+            config=self.tasks_config['html_report_generation'],
+            agent=self.web_developer_agent(),
+            output_file="report.html", 
+			
+        )
+    
+    @crew
+    def crew(self) -> Crew:
+        """Creates the Stock Analysis"""
+        return Crew(
+            agents=self.agents,  
+            tasks=self.tasks, 
+            process=Process.sequential,
+            verbose=True,
+            planning=True,
+            memory=True,
+            manager_agent=self.web_developer_agent(),
+            output_log_file="log.txt",
+            planning_llm=chat_gpt_4o_mini
+        )

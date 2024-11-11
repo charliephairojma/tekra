@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-from tekra3.crew import Tekra3Crew
+from tekra3.crew import StockAnalysisCrew
 
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
@@ -12,9 +12,14 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'AI LLMs'
+        # 'query': 'What is the best running shoe for beginner',
+        'company_stock': 'PDD Pindoudou',
+        'recipient': 'charlie.phairoj@gmail.com',
+        'subject': 'Report for PDD',
+        'body': 'Please find the report for PDD',
+        # 'attachment_path': 'report.pdf',
     }
-    Tekra3Crew().crew().kickoff(inputs=inputs)
+    StockAnalysisCrew().crew().kickoff(inputs=inputs)
 
 
 def train():
@@ -25,7 +30,7 @@ def train():
         "topic": "AI LLMs"
     }
     try:
-        Tekra3Crew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+        StockAnalysisCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
 
     except Exception as e:
         raise Exception(f"An error occurred while training the crew: {e}")
@@ -35,7 +40,7 @@ def replay():
     Replay the crew execution from a specific task.
     """
     try:
-        Tekra3Crew().crew().replay(task_id=sys.argv[1])
+        StockAnalysisCrew().crew().replay(task_id=sys.argv[1])
 
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")
@@ -48,7 +53,7 @@ def test():
         "topic": "AI LLMs"
     }
     try:
-        Tekra3Crew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
+        StockAnalysisCrew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
 
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")

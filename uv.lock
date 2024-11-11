@@ -1311,6 +1311,12 @@ wheels = [
 ]
 
 [[package]]
+name = "html2text"
+version = "2024.2.26"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/43/e1d53588561e533212117750ee79ad0ba02a41f52a08c1df3396bd466c05/html2text-2024.2.26.tar.gz", hash = "sha256:05f8e367d15aaabc96415376776cdd11afd5127a77fce6e36afc60c563ca2c32", size = 56527 }
+
+[[package]]
 name = "httpcore"
 version = "1.0.6"
 source = { registry = "https://pypi.org/simple" }
@@ -2571,6 +2577,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pdfkit"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/bb/6ddc62b4622776a6514fd749041c2b4bccd343e006d00de590f8090ac8b1/pdfkit-1.0.0.tar.gz", hash = "sha256:992f821e1e18fc8a0e701ecae24b51a2d598296a180caee0a24c0af181da02a9", size = 13288 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/64/1b/26c080096dd93936dccfd32c682bed3d5630a84aae9d493ff68afb2ae0fb/pdfkit-1.0.0-py3-none-any.whl", hash = "sha256:a7a4ca0d978e44fa8310c4909f087052430a6e8e0b1dd7ceef657f139789f96f", size = 12099 },
+]
+
+[[package]]
 name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3396,6 +3411,18 @@ wheels = [
 ]
 
 [[package]]
+name = "sec-api"
+version = "1.0.25"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/08/a618a12b604fa6e3142683e48478404deed7e77c8088c8ad5b1264475e05/sec-api-1.0.25.tar.gz", hash = "sha256:52a50a1ce54ded1dfd7d384dc9a2671bf36d505b820d53a13a27e3365270e1e2", size = 48705 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2e/59/f3a44fdb1eb03105de1b435b7b5ec8fe28ea9167e1c61e32e96d959a5156/sec_api-1.0.25-py3-none-any.whl", hash = "sha256:75482460c90492dd4fd46d584c56e33bd61cdef61ce3209e51611f8106f24537", size = 19999 },
+]
+
+[[package]]
 name = "selenium"
 version = "4.26.1"
 source = { registry = "https://pypi.org/simple" }
@@ -3599,10 +3626,18 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["tools"] },
+    { name = "html2text" },
+    { name = "pdfkit" },
+    { name = "sec-api" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "crewai", extras = ["tools"], specifier = ">=0.76.9,<1.0.0" }]
+requires-dist = [
+    { name = "crewai", extras = ["tools"], specifier = ">=0.76.9,<1.0.0" },
+    { name = "html2text" },
+    { name = "pdfkit" },
+    { name = "sec-api" },
+]
 
 [[package]]
 name = "tenacity"
