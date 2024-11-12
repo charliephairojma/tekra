@@ -14,9 +14,9 @@ def run():
     inputs = {
         # 'query': 'What is the best running shoe for beginner',
         'company_stock': 'PDD Pindoudou',
-        'recipient': 'charlie.phairoj@gmail.com',
-        'subject': 'Report for PDD',
-        'body': 'Please find the report for PDD',
+        # 'recipient': 'charlie.phairoj@gmail.com',
+        # 'subject': 'Report for PDD',
+        # 'body': 'Please find the report for PDD',
         # 'attachment_path': 'report.pdf',
     }
     StockAnalysisCrew().crew().kickoff(inputs=inputs)
@@ -27,7 +27,11 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI LLMs"
+        # "topic": "AI LLMs"
+        'company_stock': 'PDD Pindoudou',
+        # 'recipient': 'charlie.phairoj@gmail.com',
+        # 'subject': 'Report for PDD',
+        # 'body': 'Please find the report for PDD',
     }
     try:
         StockAnalysisCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
@@ -50,7 +54,11 @@ def test():
     Test the crew execution and returns the results.
     """
     inputs = {
-        "topic": "AI LLMs"
+        # "topic": "AI LLMs"
+        'company_stock': 'PDD Pindoudou',
+        # 'recipient': 'charlie.phairoj@gmail.com',
+        # 'subject': 'Report for PDD',
+        # 'body': 'Please find the report for PDD',
     }
     try:
         StockAnalysisCrew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)

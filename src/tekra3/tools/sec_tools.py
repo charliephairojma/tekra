@@ -1,6 +1,6 @@
 import os
 from typing import Any, Optional, Type
-from pydantic.v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from crewai_tools import RagTool
 from sec_api import QueryApi  # Make sure to have sec_api installed
 from embedchain.models.data_type import DataType
@@ -14,12 +14,20 @@ class FixedSEC10KToolSchema(BaseModel):
         ...,
         description="Mandatory query you would like to search from the 10-K report",
     )
+    
+    model_config = {
+        "extra": "forbid"
+    }
 
 class SEC10KToolSchema(FixedSEC10KToolSchema):
     """Input for SEC10KTool."""
     stock_name: str = Field(
         ..., description="Mandatory valid stock name you would like to search"
     )
+    
+    model_config = {
+        "extra": "forbid"
+    }
 
 class SEC10KTool(RagTool):
     name: str = "Search in the specified 10-K form"
@@ -27,7 +35,6 @@ class SEC10KTool(RagTool):
     args_schema: Type[BaseModel] = SEC10KToolSchema
 
     def __init__(self, stock_name: Optional[str] = None, **kwargs):
-        print("enter init")
         # exit()
         super().__init__(**kwargs)
         if stock_name is not None:
@@ -95,12 +102,20 @@ class FixedSEC10QToolSchema(BaseModel):
         ...,
         description="Mandatory query you would like to search from the 10-Q report",
     )
+    
+    model_config = {
+        "extra": "forbid"
+    }
 
 class SEC10QToolSchema(FixedSEC10QToolSchema):
     """Input for SEC10QTool."""
     stock_name: str = Field(
         ..., description="Mandatory valid stock name you would like to search"
     )
+    
+    model_config = {
+        "extra": "forbid"
+    }
 
 class SEC10QTool(RagTool):
     name: str = "Search in the specified 10-Q form"

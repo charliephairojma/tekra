@@ -44,6 +44,8 @@ class StockAnalysisCrew:
                 # DirectorySearchTool(directory="analyst_reports"),
                 # SEC10QTool("AMZN"),
                 # SEC10KTool("AMZN"),
+                SEC10QTool(),
+                SEC10KTool(),
             ],
             llm=chat_gpt_4o_mini
         )
@@ -66,8 +68,8 @@ class StockAnalysisCrew:
                 ScrapeWebsiteTool(),
                 # PDFSearchTool("stock_analysis/analyst_reports/ueh00159.pdf")
                 # WebsiteSearchTool(), 
-                # SEC10QTool("AMZN"),
-                # SEC10KTool("AMZN"),
+                SEC10QTool(),
+                SEC10KTool(),
             ],
             llm=chat_gpt_4o_mini
         )
@@ -90,8 +92,8 @@ class StockAnalysisCrew:
                 WebsiteSearchTool(),
                 CalculatorTool(),
                 # PDFSearchTool("stock_analysis/analyst_reports/ueh00159.pdf"),
-                # SEC10QTool(),
-                # SEC10KTool(),
+                SEC10QTool(),
+                SEC10KTool(),
             ],
             llm=chat_gpt_4o_mini
         )
@@ -120,6 +122,8 @@ class StockAnalysisCrew:
                 ScrapeWebsiteTool(),
                 WebsiteSearchTool(),
                 CalculatorTool(),
+                SEC10QTool(),
+                SEC10KTool(),
             ],
             llm=chat_gpt_4o_mini
         )
@@ -184,7 +188,7 @@ class StockAnalysisCrew:
             verbose=True,
             planning=True,
             memory=True,
-            manager_agent=self.web_developer_agent(),
-            output_log_file="log.txt",
+            # manager_agent=self.investment_advisor_agent(),
+            # output_log_file="log.txt",
             planning_llm=chat_gpt_4o_mini
         )

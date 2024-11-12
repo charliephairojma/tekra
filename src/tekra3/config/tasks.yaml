@@ -32,7 +32,7 @@ filings_analysis:
 
   expected_output: >
     Final answer must be an expanded report that now also highlights significant findings
-    from these filings including any red flags or positive indicators for your customer.
+    from these filings including any red flags or positive indicators for your customer. Make sure to include references
 
 recommend:
   description: >
@@ -48,8 +48,18 @@ recommend:
 
   expected_output: > 
     Your final answer MUST be a recommendation for your customer. It should be a full super detailed report, providing a 
-    clear investment stance and strategy with supporting evidence.
-    Make it pretty and well formatted for your customer.
+    clear investment stance and strategy with supporting evidence, and reference the sources. The report needs to have the following: 
+       - Executive Summary
+       - Company Overview
+       - Recent Stock Performance
+       - Key Financial Metrics
+       - Insider Trading Activity
+       - Analyst Opinions (Cumulative and individual details)
+       - Risks and Challenges
+       - Market Sentiment
+       - Upcoming Events
+       - Conclusion
+       - Recommendation
 
 data_visualization:
   description: >
@@ -67,9 +77,21 @@ html_report_generation:
     1. Have a clear, visually appealing structure with a table of contents.
     2. Incorporate all data visualizations and charts, which should be interactive or illustrated via SVG
     3. Present information in a logical, easy-to-follow manner.
-    4. Include interactive elements if possible but nothing should be hidden or need expanding. And charts should be implemented with chartjs, which can be added via a cdn.
+    4. Include interactive elements if but nothing should be hidden or need expanding. And charts should be implemented with chartjs, which can be added via a cdn.
     5. All the javascript and css should be inline.
     6. The styling shold be in the based on bootstrap, or can use bootstrap if everything can in the same output with no compiling.
+    7. The report needs to have a table of contents, and the sections should be in the following order:
+        - Executive Summary
+        - Company Overview
+        - Recent Stock Performance
+        - Key Financial Metrics
+        - Insider Trading Activity
+        - Analyst Opinions (Cumulative and individual details)
+        - Risks and Challenges
+        - Market Sentiment
+        - Upcoming Events
+        - Conclusion
+        - Recommendation
   expected_output: >
     A polished, well-formatted HTML report that effectively communicates all aspects of the stock analysis.
-    The report should be suitable for both quick overview and in-depth reading and is saved to file.
+    The report should be suitable for in-depth reading, with numerous graphs, charts and references.
